@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Natural Vibes — Sabonetes Artesanais 100% Naturais</title>
+<meta name="description" content="Natural Vibes: sabonetes artesanais feitos com ervas, flores e óleos essenciais. 100% natural, vegano e cruelty-free.">
+
+<!-- Tipografia: Playfair Display (títulos) + Inter (textos) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ═════════════════════════════════════════════════════════════
+   NATURAL VIBES — folha de estilos
+   Paleta: verde-sálvia, verde-musgo, bege, creme, lavanda, rosa
+═════════════════════════════════════════════════════════════ */
+:root{
+  --creme:        #FAF6EE;
+  --creme-claro:  #FFFDF8;
+  --bege:         #F3ECDD;
+  --salvia:       #9CAF88;
+  --salvia-claro: #C8D5B9;
+  --musgo:        #5C6F52;
+  --musgo-escuro: #3A4632;
+  --musgo-noite:  #2C3625;
+  --tinta:        #2E3829;   /* cor principal de texto */
+  --tinta-suave:  #5d6655;
+  --lavanda:      #C5B8DC;
+  --rosa:         #EBC9C4;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Inter', system-ui, -apple-system, sans-serif;
+  /* raio "orgânico" reutilizado em imagens e cards */
+  --blob: 58% 42% 55% 45% / 50% 55% 45% 50%;
+  --header-h: 4.5rem;
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0 }
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--header-h) + 1rem);
+}
+
+body{
+  font-family:var(--sans);
+  font-weight:300;
+  color:var(--tinta);
+  background:var(--creme);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+img,svg{ display:block; max-width:100% }
+a{ color:inherit }
+button{ font:inherit; cursor:pointer; border:none; background:none }
+
+h1,h2,h3{ font-family:var(--serif); font-weight:500; line-height:1.18 }
+
+.sr-only{
+  position:absolute; width:1px; height:1px; overflow:hidden;
+  clip:rect(0 0 0 0); white-space:nowrap;
+}
+
+/* Link "pular para o conteúdo" (acessibilidade) */
+.skip-link{
+  position:fixed; top:-100%; left:1rem; z-index:999;
+  background:var(--musgo-escuro); color:var(--creme);
+  padding:.6rem 1.2rem; border-radius:99px; transition:top .3s;
+}
+.skip-link:focus{ top:1rem }
+
+/* ── Cursor personalizado (folha que segue o mouse) ─────────── */
+#cursor{
+  position:fixed; left:0; top:0; z-index:998;
+  pointer-events:none; opacity:0;
+  transition:opacity .4s;
+  will-change:transform;
+}
+#cursor.on{ opacity:.85 }
+#cursor svg{
+  width:20px; height:20px;
+  margin:-10px 0 0 -10px;          /* centraliza no ponteiro */
+  color:var(--musgo);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+#cursor.big svg{ transform:scale(1.9) rotate(-30deg); color:var(--salvia) }
+@media (pointer:coarse){ #cursor{ display:none } }
+
+/* ── Canvas das pétalas/folhas caindo ───────────────────────── */
+#petals{
+  position:fixed; inset:0; z-index:50;
+  pointer-events:none;
+}
+
+/* ── Header fixo translúcido ────────────────────────────────── */
+#header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  height:var(--header-h);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(1.25rem, 4vw, 3rem);
+  background:rgba(250,246,238,.72);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(46,56,41,.07);
+  transition:box-shadow .4s;
+}
+#header.scrolled{ box-shadow:0 8px 30px rgba(46,56,41,.08) }
+
+.logo{
+  font-family:var(--serif); font-size:1.45rem; font-weight:600;
+  text-decoration:none; letter-spacing:.02em;
+}
+.logo em{ font-style:italic; font-weight:400; color:var(--musgo) }
+.logo svg{
+  display:inline-block; vertical-align:-3px; margin-right:.45rem;
+  width:20px; height:20px; color:var(--salvia);
+}
+
+.nav-links{ display:none; list-style:none; gap:2.2rem; align-items:center }
+.nav-links a{
+  text-decoration:none; font-size:.92rem; font-weight:400;
+  color:var(--tinta-suave); letter-spacing:.03em;
+  transition:color .3s;
+}
+.nav-links a:hover{ color:var(--musgo-escuro) }
+.nav-links .nav-cta{
+  background:var(--musgo); color:var(--creme);
+  padding:.55rem 1.4rem; border-radius:99px; font-weight:500;
+  transition:background .3s, transform .3s;
+}
+.nav-links .nav-cta:hover{ background:var(--musgo-escuro); color:var(--creme); transform:translateY(-2px) }
+
+@media (min-width:820px){
+  .nav-links{ display:flex }
+  #burger{ display:none }
+}
+
+/* Hamburger */
+#burger{
+  display:flex; flex-direction:column; gap:5px;
+  padding:.6rem; border-radius:12px;
+}
+#burger span{
+  width:24px; height:2px; background:var(--tinta);
+  border-radius:2px; transition:transform .35s, opacity .3s;
+}
+#burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg) }
+#burger.open span:nth-child(2){ opacity:0 }
+#burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg) }
+
+/* Menu mobile em tela cheia */
+#mnav{
+  position:fixed; inset:0; z-index:90;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2.2rem;
+  background:rgba(250,246,238,.96);
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  transform:translateX(102%);
+  transition:transform .5s cubic-bezier(.65,0,.35,1);
+}
+#mnav.open{ transform:none }
+#mnav a{
+  font-family:var(--serif); font-size:1.7rem; text-decoration:none;
+  color:var(--tinta);
+}
+#mnav .nav-cta{
+  font-family:var(--sans); font-size:1rem; font-weight:500;
+  background:var(--musgo); color:var(--creme);
+  padding:.8rem 2rem; border-radius:99px;
+}
+
+/* ── Seções: base ───────────────────────────────────────────── */
+section{ position:relative }
+.wrap{
+  width:min(1160px, 100% - 2.5rem);
+  margin-inline:auto;
+}
+.sec-pad{ padding:clamp(4rem, 9vw, 7rem) 0 }
+
+.eyebrow{
+  display:inline-block;
+  font-size:.78rem; font-weight:500; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--musgo);
+  margin-bottom:1rem;
+}
+.sec-title{
+  font-size:clamp(1.9rem, 4.4vw, 3rem);
+  margin-bottom:1rem;
+}
+.sec-sub{
+  max-width:34rem; color:var(--tinta-suave);
+}
+.center{ text-align:center }
+.center .sec-sub{ margin-inline:auto }
+
+/* Divisor de onda entre seções (transição orgânica) */
+.divider{ line-height:0 }
+.divider svg{
+  width:100%; height:clamp(38px, 6vw, 76px);
+  display:block;
+}
+
+/* ── Animações de entrada (scroll reveal) ───────────────────── */
+.js .reveal{
+  opacity:0; transform:translateY(30px);
+  transition:opacity .85s ease, transform .85s cubic-bezier(.22,1,.36,1);
+  transition-delay:var(--rd, 0s);
+}
+.js .reveal.in{ opacity:1; transform:none }
+
+/* Revelação orgânica (clip-path ondulado) para imagens grandes */
+.js .reveal-clip{
+  opacity:0;
+  clip-path:inset(12% 12% 12% 12% round 50% 45% 55% 48% / 48% 55% 45% 52%);
+  transition:opacity .9s ease, clip-path 1.2s cubic-bezier(.22,1,.36,1);
+}
+.js .reveal-clip.in{
+  opacity:1;
+  clip-path:inset(0 0 0 0 round var(--blob));
+}
+
+/* Elementos decorativos com parallax */
+.pl{
+  position:absolute; pointer-events:none; z-index:1;
+  will-change:transform;
+}
+.deco{ color:var(--salvia); opacity:.45 }
+
+/* ═════════════════════════ HERO ═════════════════════════════ */
+#hero{
+  min-height:100svh;
+  display:grid; place-items:center;
+  text-align:center;
+  padding:calc(var(--header-h) + 3rem) 1.25rem 11rem;
+  background:
+    radial-gradient(60% 50% at 80% 10%, rgba(197,184,220,.18), transparent 70%),
+    radial-gradient(55% 45% at 12% 85%, rgba(156,175,136,.22), transparent 70%),
+    var(--creme);
+  overflow:hidden;
+}
+.hero-inner{ position:relative; z-index:5; max-width:46rem }
+.hero-inner h1{
+  font-size:clamp(3rem, 9.5vw, 5.6rem);
+  font-weight:500; letter-spacing:.01em;
+}
+.hero-inner h1 em{ font-style:italic; color:var(--musgo) }
+.hero-slogan{
+  margin:1.4rem auto 2.4rem; max-width:32rem;
+  font-size:clamp(1rem, 2.4vw, 1.18rem);
+  color:var(--tinta-suave);
+}
+
+.btn{
+  display:inline-flex; align-items:center; gap:.6rem;
+  background:var(--musgo); color:var(--creme);
+  font-weight:500; font-size:.98rem; text-decoration:none;
+  padding:1rem 2.1rem; border-radius:99px;
+  box-shadow:0 10px 30px rgba(92,111,82,.35);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1), background .3s, box-shadow .35s;
+}
+.btn:hover{
+  background:var(--musgo-escuro);
+  transform:translateY(-4px);
+  box-shadow:0 16px 38px rgba(92,111,82,.4);
+}
+.btn svg{ width:17px; height:17px; transition:transform .35s }
+.btn:hover svg{ transform:translateX(4px) }
+
+.btn-ghost{
+  display:inline-flex; align-items:center;
+  margin-left:1rem; padding:1rem .5rem;
+  font-weight:500; font-size:.95rem;
+  color:var(--musgo-escuro); text-decoration:none;
+  border-bottom:1px solid rgba(92,111,82,.4);
+  transition:border-color .3s;
+}
+.btn-ghost:hover{ border-color:var(--musgo-escuro) }
+
+/* Ondas de água animadas no rodapé do hero */
+.hero-waves{
+  position:absolute; left:0; right:0; bottom:-2px;
+  height:170px; overflow:hidden; z-index:4;
+}
+.wave{
+  position:absolute; bottom:0; left:0;
+  width:200%; max-width:none; height:100%;
+  will-change:transform;
+  animation:wave-move linear infinite;
+}
+.w3{ animation-duration:19s; opacity:.35; height:115% }
+.w2{ animation-duration:13s; animation-delay:-4s; opacity:.55; height:108% }
+.w1{ animation-duration:9s;  animation-delay:-2s; height:100% }
+@keyframes wave-move{ to{ transform:translateX(-50%) } }
+
+/* ═══════════════════ NOSSA ESSÊNCIA ═════════════════════════ */
+#essencia{ background:var(--creme-claro) }
+.ess-grid{
+  display:grid; gap:3rem; align-items:center;
+}
+@media (min-width:880px){
+  .ess-grid{ grid-template-columns:1fr 1.1fr; gap:4.5rem }
+}
+
+/* ✏️ SUBSTITUIR: troque o conteúdo de .ess-img por uma foto real, ex.:
+   <img src="fotos/marca.jpg" alt="Sabonetes Natural Vibes sobre madeira"
+        style="width:100%;height:100%;object-fit:cover">              */
+.ess-img{
+  position:relative; aspect-ratio:4/4.6;
+  border-radius:var(--blob);
+  background:linear-gradient(150deg, var(--salvia-claro), var(--salvia) 55%, var(--musgo));
+  display:grid; place-items:center;
+  overflow:hidden;
+}
+.ess-img svg{ width:46%; color:rgba(250,246,238,.85) }
+.ess-img figcaption{
+  position:absolute; bottom:1.2rem;
+  font-size:.75rem; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(250,246,238,.85);
+}
+
+.ess-text p{ margin-bottom:1.1rem; color:var(--tinta-suave) }
+.ess-text strong{ font-weight:500; color:var(--tinta) }
+
+.values{
+  display:flex; flex-wrap:wrap; gap:.8rem; margin-top:1.8rem;
+  list-style:none;
+}
+.values li{
+  display:inline-flex; align-items:center; gap:.55rem;
+  background:var(--creme);
+  border:1px solid rgba(92,111,82,.18);
+  padding:.6rem 1.15rem; border-radius:99px;
+  font-size:.85rem; font-weight:500; color:var(--musgo-escuro);
+}
+.values svg{ width:17px; height:17px; color:var(--musgo) }
+
+/* ═══════════════════ PRODUTOS ═══════════════════════════════ */
+#produtos{ background:var(--bege) }
+
+.prod-grid{
+  display:grid; gap:1.8rem; margin-top:3rem;
+  grid-template-columns:1fr;
+}
+@media (min-width:620px){ .prod-grid{ grid-template-columns:repeat(2,1fr) } }
+@media (min-width:980px){ .prod-grid{ grid-template-columns:repeat(3,1fr) } }
+
+.product-card{
+  background:var(--creme-claro);
+  border-radius:28px 32px 30px 34px / 32px 28px 34px 30px;  /* cantos orgânicos */
+  overflow:hidden;
+  box-shadow:0 6px 24px rgba(46,56,41,.07);
+  transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s;
+}
+.product-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 22px 48px rgba(46,56,41,.14);
+}
+
+.product-img{
+  position:relative; aspect-ratio:16/11;
+  display:grid; place-items:center;
+  background:linear-gradient(160deg, var(--bg1), var(--bg2));
+  overflow:hidden;
+}
+
+/* Sabonete (placeholder SVG) — flutua no hover */
+.soap{
+  width:58%; position:relative; z-index:2;
+  filter:drop-shadow(0 8px 14px rgba(46,56,41,.18));
+  transition:transform .55s cubic-bezier(.34,1.56,.64,1);
+}
+.product-card:hover .soap,
+.product-card:focus-within .soap{
+  animation:soap-float 2.8s ease-in-out infinite;
+}
+@keyframes soap-float{
+  0%,100%{ transform:translateY(-10px) rotate(-2deg) }
+  50%    { transform:translateY(-20px) rotate(2deg) }
+}
+
+/* sombra elíptica sob o sabonete */
+.soap-shadow{
+  position:absolute; bottom:13%; left:50%; z-index:1;
+  width:46%; height:12px; border-radius:50%;
+  background:rgba(46,56,41,.18); filter:blur(6px);
+  transform:translateX(-50%);
+  transition:transform .55s, opacity .55s;
+}
+.product-card:hover .soap-shadow{
+  transform:translateX(-50%) scaleX(.78); opacity:.55;
+}
+
+/* Bolhas de sabão que sobem no hover */
+.bubbles span{
+  position:absolute; bottom:20%; z-index:3;
+  width:var(--bs,12px); height:var(--bs,12px);
+  border-radius:50%; opacity:0; pointer-events:none;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.95), rgba(255,255,255,.18) 62%, rgba(255,255,255,0));
+  border:1px solid rgba(255,255,255,.6);
+}
+.bubbles span:nth-child(1){ left:20%; --bs:10px; --bd:2.2s; --bx:14px;  --bdel:0s   }
+.bubbles span:nth-child(2){ left:34%; --bs:15px; --bd:2.7s; --bx:-12px; --bdel:.5s  }
+.bubbles span:nth-child(3){ left:50%; --bs:8px;  --bd:2.1s; --bx:10px;  --bdel:.9s  }
+.bubbles span:nth-child(4){ left:64%; --bs:13px; --bd:2.5s; --bx:-15px; --bdel:.25s }
+.bubbles span:nth-child(5){ left:78%; --bs:9px;  --bd:2.3s; --bx:12px;  --bdel:.7s  }
+.bubbles span:nth-child(6){ left:44%; --bs:18px; --bd:3s;   --bx:18px;  --bdel:1.2s }
+.product-card:hover .bubbles span,
+.product-card:focus-within .bubbles span{
+  animation:bubble-rise var(--bd,2.4s) linear var(--bdel,0s) infinite;
+}
+@keyframes bubble-rise{
+  0%  { transform:translate(0,0) scale(.4); opacity:0 }
+  12% { opacity:.95 }
+  75% { opacity:.8 }
+  100%{ transform:translate(var(--bx,10px),-130px) scale(1.15); opacity:0 }
+}
+
+.product-info{ padding:1.5rem 1.5rem 1.7rem }
+.product-info h3{ font-size:1.3rem; margin-bottom:.4rem }
+.product-ing{
+  font-size:.84rem; color:var(--tinta-suave);
+  min-height:2.6em; margin-bottom:1.1rem;
+}
+.product-bottom{
+  display:flex; align-items:center; justify-content:space-between;
+}
+.price{
+  font-family:var(--serif); font-size:1.25rem; font-weight:600;
+  color:var(--musgo-escuro);
+}
+.btn-mini{
+  font-size:.85rem; font-weight:500; text-decoration:none;
+  background:transparent; color:var(--musgo-escuro);
+  border:1.5px solid var(--musgo);
+  padding:.5rem 1.2rem; border-radius:99px;
+  transition:background .3s, color .3s, transform .3s;
+}
+.btn-mini:hover{
+  background:var(--musgo); color:var(--creme);
+  transform:translateY(-2px);
+}
+
+/* ═══════════════ INGREDIENTES DA NATUREZA ═══════════════════ */
+#ingredientes{ background:var(--musgo-escuro); color:var(--creme) }
+#ingredientes .eyebrow{ color:var(--salvia-claro) }
+#ingredientes .sec-sub{ color:rgba(250,246,238,.75) }
+
+.ing-grid{
+  display:grid; gap:1.4rem; margin-top:3.2rem;
+  grid-template-columns:repeat(2,1fr);
+}
+@media (min-width:700px) { .ing-grid{ grid-template-columns:repeat(3,1fr) } }
+@media (min-width:1080px){ .ing-grid{ grid-template-columns:repeat(6,1fr) } }
+
+.ing-item{
+  text-align:center; padding:1.8rem 1rem;
+  background:rgba(250,246,238,.06);
+  border:1px solid rgba(250,246,238,.1);
+  border-radius:24px 28px 26px 30px / 28px 24px 30px 26px;
+  transition:background .4s, transform .4s;
+}
+.ing-item:hover{ background:rgba(250,246,238,.12); transform:translateY(-6px) }
+.ing-item svg{
+  width:42px; height:42px; margin:0 auto .9rem;
+  color:var(--salvia-claro);
+}
+.ing-item h3{ font-size:1.02rem; margin-bottom:.3rem }
+.ing-item p{ font-size:.8rem; color:rgba(250,246,238,.65) }
+
+/* ═══════════════════ DEPOIMENTOS ════════════════════════════ */
+#depoimentos{ background:var(--creme) }
+
+.carousel{
+  position:relative; max-width:46rem; margin:2.5rem auto 0;
+}
+.car-viewport{ overflow:hidden; border-radius:24px }
+.car-track{
+  display:flex;
+  transition:transform .65s cubic-bezier(.22,1,.36,1);
+}
+.testimonial{
+  flex:0 0 100%; min-width:100%;
+  text-align:center; padding:2.5rem clamp(1.2rem,5vw,3.5rem);
+}
+.stars{ color:#C9A86A; letter-spacing:.25em; margin-bottom:1.2rem; font-size:.95rem }
+.testimonial blockquote{
+  font-family:var(--serif); font-style:italic;
+  font-size:clamp(1.1rem, 2.6vw, 1.4rem); line-height:1.55;
+  color:var(--tinta);
+}
+.testimonial figcaption{
+  margin-top:1.4rem; font-size:.88rem; color:var(--tinta-suave);
+}
+.testimonial figcaption strong{ font-weight:600; color:var(--musgo-escuro) }
+
+.car-btn{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:5;
+  width:44px; height:44px; border-radius:50%;
+  display:grid; place-items:center;
+  background:var(--creme-claro); color:var(--musgo-escuro);
+  box-shadow:0 4px 16px rgba(46,56,41,.12);
+  transition:background .3s, transform .3s;
+}
+.car-btn:hover{ background:var(--salvia-claro); transform:translateY(-50%) scale(1.08) }
+.car-btn svg{ width:18px; height:18px }
+.car-prev{ left:-8px }
+.car-next{ right:-8px }
+@media (min-width:900px){ .car-prev{ left:-60px } .car-next{ right:-60px } }
+
+.car-dots{
+  display:flex; justify-content:center; gap:.6rem; margin-top:1.6rem;
+}
+.car-dots button{
+  width:9px; height:9px; border-radius:50%;
+  background:rgba(92,111,82,.25);
+  transition:background .3s, transform .3s;
+}
+.car-dots button.on{ background:var(--musgo); transform:scale(1.35) }
+
+/* ═══════════════════ FOOTER ═════════════════════════════════ */
+footer{ background:var(--musgo-noite); color:rgba(250,246,238,.8) }
+.foot-grid{
+  display:grid; gap:2.6rem;
+  padding:clamp(3.5rem,7vw,5.5rem) 0 3rem;
+}
+@media (min-width:820px){
+  .foot-grid{ grid-template-columns:1.3fr 1fr 1.2fr; gap:3.5rem }
+}
+.foot-brand .logo{ color:var(--creme); font-size:1.6rem }
+.foot-brand p{ margin:1rem 0 1.5rem; font-size:.9rem; max-width:21rem }
+
+.social{ display:flex; gap:.9rem; list-style:none }
+.social a{
+  display:grid; place-items:center;
+  width:42px; height:42px; border-radius:50%;
+  background:rgba(250,246,238,.08);
+  border:1px solid rgba(250,246,238,.15);
+  transition:background .3s, transform .3s;
+}
+.social a:hover{ background:var(--musgo); transform:translateY(-3px) }
+.social svg{ width:18px; height:18px; color:var(--creme) }
+
+footer h3{
+  font-size:1.05rem; color:var(--creme); margin-bottom:1.2rem;
+}
+.foot-contact li{
+  list-style:none; display:flex; gap:.7rem; align-items:flex-start;
+  font-size:.9rem; margin-bottom:.8rem;
+}
+.foot-contact svg{ width:17px; height:17px; flex-shrink:0; margin-top:4px; color:var(--salvia-claro) }
+.foot-contact a{ color:inherit; text-decoration:none }
+.foot-contact a:hover{ color:var(--creme) }
+
+.news-box p{ font-size:.9rem; margin-bottom:1.1rem }
+.news-form{
+  display:flex; border-radius:99px; overflow:hidden;
+  background:rgba(250,246,238,.1);
+  border:1px solid rgba(250,246,238,.2);
+}
+.news-form input{
+  flex:1; min-width:0; border:none; background:transparent;
+  padding:.9rem 1.3rem; color:var(--creme);
+  font:inherit; font-size:.9rem; outline:none;
+}
+.news-form input::placeholder{ color:rgba(250,246,238,.5) }
+.news-form button{
+  background:var(--salvia); color:var(--musgo-noite);
+  font-weight:600; font-size:.88rem;
+  padding:0 1.5rem; border-radius:99px;
+  transition:background .3s;
+}
+.news-form button:hover{ background:var(--salvia-claro) }
+.news-ok{ color:var(--salvia-claro); font-size:.95rem }
+
+.foot-bottom{
+  border-top:1px solid rgba(250,246,238,.12);
+  padding:1.5rem 0 2rem; text-align:center;
+  font-size:.78rem; color:rgba(250,246,238,.45);
+}
+
+/* ── Acessibilidade: respeita prefers-reduced-motion ────────── */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  html{ scroll-behavior:auto }
+  .js .reveal,.js .reveal-clip{ opacity:1; transform:none; clip-path:none }
+  #petals,#cursor{ display:none }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#hero">Pular para o conteúdo</a>
+
+<!-- ═══ Símbolos SVG reutilizáveis (folhas, galhos, ícones) ═══ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- folha simples -->
+    <symbol id="sym-leaf" viewBox="0 0 64 64">
+      <path d="M32 58 C10 44 6 20 10 6 C28 8 50 18 54 40 C56 50 46 58 32 58 Z" fill="currentColor"/>
+      <path d="M30 54 C28 38 26 24 16 12" stroke="rgba(255,255,255,.45)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </symbol>
+    <!-- galho com folhas (decoração parallax) -->
+    <symbol id="sym-branch" viewBox="0 0 120 240">
+      <path d="M62 238 C58 180 56 110 64 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M60 200 C30 196 16 178 14 152 C40 158 56 176 60 200 Z" fill="currentColor"/>
+      <path d="M58 150 C28 146 14 128 12 102 C38 108 54 126 58 150 Z" fill="currentColor"/>
+      <path d="M58 100 C30 96 18 80 16 56 C40 62 54 78 58 100 Z" fill="currentColor"/>
+      <path d="M62 176 C92 172 106 154 108 128 C82 134 66 152 62 176 Z" fill="currentColor"/>
+      <path d="M62 124 C92 120 106 102 108 76 C82 82 66 100 62 124 Z" fill="currentColor"/>
+      <path d="M64 70 C90 66 102 52 104 30 C80 36 68 50 64 70 Z" fill="currentColor"/>
+    </symbol>
+    <!-- flor de 5 pétalas -->
+    <symbol id="sym-flower" viewBox="0 0 64 64">
+      <g fill="currentColor">
+        <ellipse cx="32" cy="15" rx="8" ry="13"/>
+        <ellipse cx="32" cy="15" rx="8" ry="13" transform="rotate(72 32 32)"/>
+        <ellipse cx="32" cy="15" rx="8" ry="13" transform="rotate(144 32 32)"/>
+        <ellipse cx="32" cy="15" rx="8" ry="13" transform="rotate(216 32 32)"/>
+        <ellipse cx="32" cy="15" rx="8" ry="13" transform="rotate(288 32 32)"/>
+      </g>
+      <circle cx="32" cy="32" r="7" fill="rgba(255,255,255,.7)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Cursor personalizado (folha) -->
+<div id="cursor" aria-hidden="true">
+  <svg viewBox="0 0 64 64"><use href="#sym-leaf"/></svg>
+</div>
+
+<!-- Canvas: folhas e pétalas caindo -->
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header id="header">
+  <a class="logo" href="#hero" aria-label="Natural Vibes — início">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sym-leaf"/></svg>Natural <em>Vibes</em>
+  </a>
+  <nav aria-label="Navegação principal">
+    <ul class="nav-links">
+      <li><a href="#essencia">Nossa Essência</a></li>
+      <li><a href="#produtos">Sabonetes</a></li>
+      <li><a href="#ingredientes">Ingredientes</a></li>
+      <li><a href="#depoimentos">Depoimentos</a></li>
+      <li><a href="#contato" class="nav-cta">Contato</a></li>
+    </ul>
+  </nav>
+  <button id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mnav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Menu mobile -->
+<nav id="mnav" aria-label="Menu mobile">
+  <a href="#essencia">Nossa Essência</a>
+  <a href="#produtos">Sabonetes</a>
+  <a href="#ingredientes">Ingredientes</a>
+  <a href="#depoimentos">Depoimentos</a>
+  <a href="#contato" class="nav-cta">Contato</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+
+  <!-- decorações vegetais com parallax -->
+  <div class="pl" data-speed="0.22" style="top:12%; left:-30px">
+    <svg class="deco" width="110" height="220" style="transform:rotate(18deg)"><use href="#sym-branch"/></svg>
+  </div>
+  <div class="pl" data-speed="0.14" style="top:18%; right:-26px">
+    <svg class="deco" width="95" height="190" style="transform:rotate(-160deg)"><use href="#sym-branch"/></svg>
+  </div>
+  <div class="pl" data-speed="0.3" style="bottom:30%; left:10%">
+    <svg class="deco" width="46" height="46" style="color:#C5B8DC; opacity:.55"><use href="#sym-flower"/></svg>
+  </div>
+  <div class="pl" data-speed="0.26" style="top:30%; right:14%">
+    <svg class="deco" width="36" height="36" style="color:#EBC9C4; opacity:.6"><use href="#sym-flower"/></svg>
+  </div>
+
+  <div class="hero-inner">
+    <span class="eyebrow reveal">Sabonetes artesanais · 100% naturais</span>
+    <!-- ✏️ SUBSTITUIR: nome e slogan da marca -->
+    <h1 class="reveal" style="--rd:.1s">Natural <em>Vibes</em></h1>
+    <p class="hero-slogan reveal" style="--rd:.22s">
+      Ervas, flores e óleos essenciais transformados em cuidado para a sua pele.
+      Pureza que você sente — da natureza para o seu banho.
+    </p>
+    <div class="reveal" style="--rd:.34s">
+      <a class="btn" href="#produtos">
+        Conheça nossos sabonetes
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn-ghost" href="#essencia">Nossa história</a>
+    </div>
+  </div>
+
+  <!-- Ondas de água em movimento contínuo -->
+  <div class="hero-waves" aria-hidden="true">
+    <svg class="wave w3" viewBox="0 0 2880 120" preserveAspectRatio="none">
+      <path fill="#5C6F52" d="M0,64 C240,104 480,24 720,64 C960,104 1200,24 1440,64 C1680,104 1920,24 2160,64 C2400,104 2640,24 2880,64 L2880,120 L0,120 Z"/>
+    </svg>
+    <svg class="wave w2" viewBox="0 0 2880 120" preserveAspectRatio="none">
+      <path fill="#9CAF88" d="M0,64 C240,104 480,24 720,64 C960,104 1200,24 1440,64 C1680,104 1920,24 2160,64 C2400,104 2640,24 2880,64 L2880,120 L0,120 Z"/>
+    </svg>
+    <svg class="wave w1" viewBox="0 0 2880 120" preserveAspectRatio="none">
+      <path fill="#FFFDF8" d="M0,64 C240,104 480,24 720,64 C960,104 1200,24 1440,64 C1680,104 1920,24 2160,64 C2400,104 2640,24 2880,64 L2880,120 L0,120 Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════ NOSSA ESSÊNCIA ═══════════════════ -->
+<section id="essencia" class="sec-pad">
+  <div class="pl" data-speed="0.18" style="top:6%; right:-34px">
+    <svg class="deco" width="100" height="200" style="transform:rotate(-155deg); opacity:.3"><use href="#sym-branch"/></svg>
+  </div>
+
+  <div class="wrap ess-grid">
+    <figure class="ess-img reveal-clip">
+      <!-- ✏️ SUBSTITUIR: coloque aqui a foto da marca / produção artesanal -->
+      <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sym-leaf"/></svg>
+      <figcaption>sua foto aqui</figcaption>
+    </figure>
+
+    <div class="ess-text">
+      <span class="eyebrow reveal">Nossa Essência</span>
+      <h2 class="sec-title reveal" style="--rd:.08s">Feito à mão,<br>com tempo e intenção</h2>
+      <!-- ✏️ SUBSTITUIR: história real da marca -->
+      <p class="reveal" style="--rd:.16s">
+        A <strong>Natural Vibes</strong> nasceu em uma pequena cozinha perfumada por lavanda e
+        alecrim, da vontade de voltar ao essencial: cuidar da pele com aquilo que a natureza
+        já oferece pronto.
+      </p>
+      <p class="reveal" style="--rd:.24s">
+        Cada barra é produzida <strong>à mão, em pequenos lotes</strong>, com ervas e flores
+        cultivadas sem agrotóxicos, óleos vegetais puros e muita paciência. Nada de fórmulas
+        agressivas, fragrâncias sintéticas ou pressa.
+      </p>
+      <ul class="values reveal" style="--rd:.32s">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21C7 17 4 13 4 9a8 8 0 0 1 16 0c0 4-3 8-8 12Z"/><path d="M12 21V9"/></svg>
+          100% Natural
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V11"/><path d="M12 11C12 7 9 4 4 4c0 5 3 8 8 7Z"/><path d="M12 13c0-3 2.5-6 8-6 0 4-2.5 7-8 6Z"/></svg>
+          Vegano
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3C8 6.5 8.2 9 9.5 11"/><path d="M15 3c1 3.5.8 6-.5 8"/><circle cx="12" cy="16" r="5.5"/><path d="M10.5 15.5h.01M13.5 15.5h.01"/><path d="M12 17.5v1"/></svg>
+          Cruelty-free
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PRODUTOS ═══════════════════ -->
+<div class="divider" style="color:#FFFDF8; background:var(--bege)" aria-hidden="true">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path fill="currentColor" d="M0,0 L1440,0 L1440,26 C1240,62 1060,6 860,30 C640,56 460,68 270,46 C150,32 60,38 0,16 Z"/></svg>
+</div>
+
+<section id="produtos" class="sec-pad">
+  <div class="pl" data-speed="0.2" style="top:4%; left:-30px">
+    <svg class="deco" width="90" height="180" style="transform:rotate(25deg); opacity:.35"><use href="#sym-branch"/></svg>
+  </div>
+  <div class="pl" data-speed="0.12" style="bottom:8%; right:-28px">
+    <svg class="deco" width="100" height="200" style="transform:rotate(-150deg); opacity:.3"><use href="#sym-branch"/></svg>
+  </div>
+
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow reveal">Nossos Sabonetes</span>
+      <h2 class="sec-title reveal" style="--rd:.08s">Escolha o seu ritual</h2>
+      <p class="sec-sub reveal" style="--rd:.16s">
+        Barras de glicerina vegetal enriquecidas com ervas, flores e óleos essenciais puros.
+        Passe o mouse sobre cada sabonete. 🫧
+      </p>
+    </div>
+
+    <div class="prod-grid">
+
+      <!-- ═══ CARD DE PRODUTO — duplique este bloco para adicionar produtos ═══
+           ✏️ SUBSTITUIR: dentro de .product-img, troque o SVG + sombra por:
+           <img src="fotos/sabonete-lavanda.jpg" alt="Sabonete Lavanda e Camomila"
+                style="width:100%;height:100%;object-fit:cover">                  -->
+      <article class="product-card reveal" style="--bg1:#EFEAF6; --bg2:#D9CFE9">
+        <div class="product-img">
+          <svg class="soap" viewBox="0 0 200 140" aria-hidden="true">
+            <rect x="25" y="20" rx="34" ry="34" width="150" height="100" fill="#CBBEE0"/>
+            <path d="M45 36 Q100 22 158 40 Q120 30 60 40 Z" fill="rgba(255,255,255,.4)"/>
+            <ellipse cx="100" cy="70" rx="50" ry="32" fill="none" stroke="rgba(46,56,41,.18)" stroke-width="1.5"/>
+            <text x="100" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="rgba(46,56,41,.55)" font-style="italic">Natural Vibes</text>
+            <text x="100" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(46,56,41,.4)" letter-spacing="2">LAVANDA</text>
+          </svg>
+          <div class="soap-shadow"></div>
+          <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="product-info">
+          <h3>Lavanda &amp; Camomila</h3>
+          <p class="product-ing">Óleo essencial de lavanda · flores de camomila · manteiga de karité</p>
+          <div class="product-bottom">
+            <span class="price">R$ 24,90</span>
+            <a class="btn-mini" href="#contato">Comprar</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card reveal" style="--rd:.1s; --bg1:#F2F4DF; --bg2:#E0E5BC">
+        <div class="product-img">
+          <svg class="soap" viewBox="0 0 200 140" aria-hidden="true">
+            <rect x="25" y="20" rx="34" ry="34" width="150" height="100" fill="#D9DFA6"/>
+            <path d="M45 36 Q100 22 158 40 Q120 30 60 40 Z" fill="rgba(255,255,255,.4)"/>
+            <ellipse cx="100" cy="70" rx="50" ry="32" fill="none" stroke="rgba(46,56,41,.18)" stroke-width="1.5"/>
+            <text x="100" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="rgba(46,56,41,.55)" font-style="italic">Natural Vibes</text>
+            <text x="100" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(46,56,41,.4)" letter-spacing="2">CAPIM-LIMÃO</text>
+          </svg>
+          <div class="soap-shadow"></div>
+          <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="product-info">
+          <h3>Capim-Limão &amp; Erva-Doce</h3>
+          <p class="product-ing">Óleo essencial de capim-limão · sementes de erva-doce · glicerina vegetal</p>
+          <div class="product-bottom">
+            <span class="price">R$ 22,90</span>
+            <a class="btn-mini" href="#contato">Comprar</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card reveal" style="--rd:.2s; --bg1:#E8F0E4; --bg2:#CBDDC2">
+        <div class="product-img">
+          <svg class="soap" viewBox="0 0 200 140" aria-hidden="true">
+            <rect x="25" y="20" rx="34" ry="34" width="150" height="100" fill="#A8C6A1"/>
+            <path d="M45 36 Q100 22 158 40 Q120 30 60 40 Z" fill="rgba(255,255,255,.4)"/>
+            <ellipse cx="100" cy="70" rx="50" ry="32" fill="none" stroke="rgba(46,56,41,.18)" stroke-width="1.5"/>
+            <text x="100" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="rgba(46,56,41,.55)" font-style="italic">Natural Vibes</text>
+            <text x="100" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(46,56,41,.4)" letter-spacing="2">ALECRIM</text>
+          </svg>
+          <div class="soap-shadow"></div>
+          <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="product-info">
+          <h3>Alecrim &amp; Hortelã</h3>
+          <p class="product-ing">Óleo essencial de alecrim · folhas de hortelã · óleo de coco</p>
+          <div class="product-bottom">
+            <span class="price">R$ 22,90</span>
+            <a class="btn-mini" href="#contato">Comprar</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card reveal" style="--bg1:#FAF2DC; --bg2:#EEDFB4">
+        <div class="product-img">
+          <svg class="soap" viewBox="0 0 200 140" aria-hidden="true">
+            <rect x="25" y="20" rx="34" ry="34" width="150" height="100" fill="#EBD9A8"/>
+            <path d="M45 36 Q100 22 158 40 Q120 30 60 40 Z" fill="rgba(255,255,255,.4)"/>
+            <ellipse cx="100" cy="70" rx="50" ry="32" fill="none" stroke="rgba(46,56,41,.18)" stroke-width="1.5"/>
+            <text x="100" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="rgba(46,56,41,.55)" font-style="italic">Natural Vibes</text>
+            <text x="100" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(46,56,41,.4)" letter-spacing="2">CALÊNDULA</text>
+          </svg>
+          <div class="soap-shadow"></div>
+          <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="product-info">
+          <h3>Calêndula &amp; Aveia</h3>
+          <p class="product-ing">Pétalas de calêndula · aveia orgânica em flocos · óleo de amêndoas</p>
+          <div class="product-bottom">
+            <span class="price">R$ 26,90</span>
+            <a class="btn-mini" href="#contato">Comprar</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card reveal" style="--rd:.1s; --bg1:#F9ECEA; --bg2:#EFD3CE">
+        <div class="product-img">
+          <svg class="soap" viewBox="0 0 200 140" aria-hidden="true">
+            <rect x="25" y="20" rx="34" ry="34" width="150" height="100" fill="#EAC6C1"/>
+            <path d="M45 36 Q100 22 158 40 Q120 30 60 40 Z" fill="rgba(255,255,255,.4)"/>
+            <ellipse cx="100" cy="70" rx="50" ry="32" fill="none" stroke="rgba(46,56,41,.18)" stroke-width="1.5"/>
+            <text x="100" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="rgba(46,56,41,.55)" font-style="italic">Natural Vibes</text>
+            <text x="100" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(46,56,41,.4)" letter-spacing="2">ROSAS</text>
+          </svg>
+          <div class="soap-shadow"></div>
+          <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="product-info">
+          <h3>Rosas &amp; Argila Rosa</h3>
+          <p class="product-ing">Pétalas de rosa · argila rosa · óleo de rosa mosqueta</p>
+          <div class="product-bottom">
+            <span class="price">R$ 28,90</span>
+            <a class="btn-mini" href="#contato">Comprar</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card reveal" style="--rd:.2s; --bg1:#E7E9E2; --bg2:#C9CDC1">
+        <div class="product-img">
+          <svg class="soap" viewBox="0 0 200 140" aria-hidden="true">
+            <rect x="25" y="20" rx="34" ry="34" width="150" height="100" fill="#6E7268"/>
+            <path d="M45 36 Q100 22 158 40 Q120 30 60 40 Z" fill="rgba(255,255,255,.25)"/>
+            <ellipse cx="100" cy="70" rx="50" ry="32" fill="none" stroke="rgba(250,246,238,.3)" stroke-width="1.5"/>
+            <text x="100" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="rgba(250,246,238,.75)" font-style="italic">Natural Vibes</text>
+            <text x="100" y="84" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(250,246,238,.55)" letter-spacing="2">DETOX</text>
+          </svg>
+          <div class="soap-shadow"></div>
+          <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="product-info">
+          <h3>Carvão Vegetal &amp; Tea Tree</h3>
+          <p class="product-ing">Carvão ativado de bambu · óleo de melaleuca · argila verde</p>
+          <div class="product-bottom">
+            <span class="price">R$ 27,90</span>
+            <a class="btn-mini" href="#contato">Comprar</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ INGREDIENTES DA NATUREZA ═══════════════ -->
+<div class="divider" style="color:#F3ECDD; background:var(--musgo-escuro)" aria-hidden="true">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path fill="currentColor" d="M0,0 L1440,0 L1440,22 C1260,58 1040,10 840,34 C620,60 440,66 250,42 C140,28 50,36 0,14 Z"/></svg>
+</div>
+
+<section id="ingredientes" class="sec-pad">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow reveal">Ingredientes da Natureza</span>
+      <h2 class="sec-title reveal" style="--rd:.08s">O que entra em cada barra</h2>
+      <p class="sec-sub reveal" style="--rd:.16s">
+        Selecionamos cada ingrediente pela sua origem e pelo bem que faz à pele — nada além disso.
+      </p>
+    </div>
+
+    <div class="ing-grid">
+      <!-- ✏️ SUBSTITUIR: ajuste nomes/descrições conforme seus ingredientes reais -->
+      <div class="ing-item reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c4 5 7 8.5 7 13a7 7 0 1 1-14 0c0-4.5 3-8 7-13Z"/><path d="M9 15a3 3 0 0 0 3 3"/></svg>
+        <h3>Glicerina Vegetal</h3>
+        <p>Hidratação profunda e suavidade</p>
+      </div>
+      <div class="ing-item reveal" style="--rd:.08s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21c0-6 2-12 10-16-1 8-4 13-10 16Z"/><path d="M7 21c-2-2-3-5-2-8 2 1 3 3 3 5"/></svg>
+        <h3>Óleos Essenciais</h3>
+        <p>Aromaterapia pura, sem sintéticos</p>
+      </div>
+      <div class="ing-item reveal" style="--rd:.16s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="2.5"/><ellipse cx="12" cy="4" rx="1.8" ry="2.6"/><ellipse cx="12" cy="4" rx="1.8" ry="2.6" transform="rotate(72 12 9)"/><ellipse cx="12" cy="4" rx="1.8" ry="2.6" transform="rotate(144 12 9)"/><ellipse cx="12" cy="4" rx="1.8" ry="2.6" transform="rotate(216 12 9)"/><ellipse cx="12" cy="4" rx="1.8" ry="2.6" transform="rotate(288 12 9)"/><path d="M12 14v8M12 18c2 0 3.5-1.5 4-3M12 20c-2 0-3.5-1.5-4-3"/></svg>
+        <h3>Ervas &amp; Flores</h3>
+        <p>Colhidas no auge, secas ao sol</p>
+      </div>
+      <div class="ing-item reveal" style="--rd:.24s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h16v3a8 8 0 0 1-16 0Z"/><path d="M8 8c0-2 1-4 4-4s4 2 4 4"/><path d="M9 14c1 1 5 1 6 0"/></svg>
+        <h3>Argilas Naturais</h3>
+        <p>Purificação suave e minerais</p>
+      </div>
+      <div class="ing-item reveal" style="--rd:.32s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8c2 1.5 2 6.5 0 8-2-1.5-2-6.5 0-8Z"/><path d="M8 12c1.5-2 6.5-2 8 0-1.5 2-6.5 2-8 0Z"/></svg>
+        <h3>Manteiga de Karité</h3>
+        <p>Nutrição intensa para pele seca</p>
+      </div>
+      <div class="ing-item reveal" style="--rd:.4s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="3" ry="5"/><ellipse cx="6" cy="14" rx="2.2" ry="3.6" transform="rotate(-25 6 14)"/><ellipse cx="18" cy="14" rx="2.2" ry="3.6" transform="rotate(25 18 14)"/><path d="M12 17v5"/></svg>
+        <h3>Aveia Orgânica</h3>
+        <p>Esfoliação delicada e calmante</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DEPOIMENTOS ═══════════════════ -->
+<div class="divider" style="color:#3A4632; background:var(--creme)" aria-hidden="true">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path fill="currentColor" d="M0,0 L1440,0 L1440,24 C1230,60 1020,8 820,32 C600,58 430,66 240,44 C130,30 50,38 0,16 Z"/></svg>
+</div>
+
+<section id="depoimentos" class="sec-pad">
+  <div class="pl" data-speed="0.16" style="top:10%; left:-26px">
+    <svg class="deco" width="84" height="170" style="transform:rotate(20deg); opacity:.3"><use href="#sym-branch"/></svg>
+  </div>
+
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow reveal">Depoimentos</span>
+      <h2 class="sec-title reveal" style="--rd:.08s">Quem usa, sente</h2>
+    </div>
+
+    <div class="carousel reveal" id="carousel" style="--rd:.16s">
+      <button class="car-btn car-prev" aria-label="Depoimento anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+
+      <div class="car-viewport">
+        <div class="car-track" id="carTrack">
+          <!-- ✏️ SUBSTITUIR: depoimentos reais de clientes -->
+          <figure class="testimonial">
+            <div class="stars" aria-hidden="true">★★★★★</div><span class="sr-only">5 estrelas.</span>
+            <blockquote>“O sabonete de lavanda virou meu ritual de fim de dia. O cheiro é delicado, real, de flor mesmo — e minha pele nunca esteve tão macia.”</blockquote>
+            <figcaption><strong>Mariana C.</strong> · São Paulo, SP</figcaption>
+          </figure>
+          <figure class="testimonial">
+            <div class="stars" aria-hidden="true">★★★★★</div><span class="sr-only">5 estrelas.</span>
+            <blockquote>“Tenho pele sensível e sempre sofri com sabonetes comuns. O de calêndula e aveia foi o primeiro que não me causou nenhuma irritação.”</blockquote>
+            <figcaption><strong>Renata F.</strong> · Belo Horizonte, MG</figcaption>
+          </figure>
+          <figure class="testimonial">
+            <div class="stars" aria-hidden="true">★★★★★</div><span class="sr-only">5 estrelas.</span>
+            <blockquote>“Comprei de presente e acabei ficando com metade pra mim. A embalagem, o aroma, a textura… dá pra sentir que é feito com carinho.”</blockquote>
+            <figcaption><strong>Juliana M.</strong> · Curitiba, PR</figcaption>
+          </figure>
+          <figure class="testimonial">
+            <div class="stars" aria-hidden="true">★★★★★</div><span class="sr-only">5 estrelas.</span>
+            <blockquote>“O detox de carvão com tea tree controlou a oleosidade da minha pele em duas semanas. Não troco por nada industrializado.”</blockquote>
+            <figcaption><strong>Pedro A.</strong> · Florianópolis, SC</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <button class="car-btn car-next" aria-label="Próximo depoimento">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+
+      <div class="car-dots" id="carDots" role="tablist" aria-label="Escolher depoimento"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<div class="divider" style="color:#FAF6EE; background:var(--musgo-noite)" aria-hidden="true">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path fill="currentColor" d="M0,0 L1440,0 L1440,20 C1250,56 1030,8 830,32 C610,58 440,66 250,44 C140,30 50,38 0,16 Z"/></svg>
+</div>
+
+<footer id="contato">
+  <div class="wrap foot-grid">
+
+    <div class="foot-brand">
+      <a class="logo" href="#hero">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sym-leaf"/></svg>Natural <em>Vibes</em>
+      </a>
+      <p>Sabonetes artesanais, naturais e veganos. Cuidado que limpa, energia que transforma. 🌿</p>
+      <ul class="social">
+        <!-- ✏️ SUBSTITUIR: links reais das redes sociais -->
+        <li><a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg>
+        </a></li>
+        <li><a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h-2.5A3.5 3.5 0 0 0 9 7.5V10H6.5v3.5H9V21h3.5v-7.5H15l.8-3.5h-3.3V8a1 1 0 0 1 1-1H15Z"/></svg>
+        </a></li>
+        <li><a href="https://wa.me/5500000000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M9 8.5c0 4 2.5 6.5 6.5 6.5l1-1.8-2.2-1-1 .8c-1.2-.6-1.9-1.3-2.5-2.5l.8-1-1-2.2Z"/></svg>
+        </a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Contato</h3>
+      <ul class="foot-contact">
+        <!-- ✏️ SUBSTITUIR: dados reais de contato -->
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 7 9 6 9-6"/></svg>
+          <a href="mailto:contato@naturalvibes.com.br">contato@naturalvibes.com.br</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 1.9Z"/></svg>
+          <a href="tel:+5500000000000">(00) 00000-0000</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Atendemos todo o Brasil 🇧🇷</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="news-box">
+      <h3>Receba novidades</h3>
+      <p>Lançamentos, rituais de autocuidado e descontos exclusivos — sem spam, prometemos.</p>
+      <form class="news-form" id="newsForm">
+        <label class="sr-only" for="newsEmail">Seu e-mail</label>
+        <input id="newsEmail" type="email" placeholder="Seu melhor e-mail" required>
+        <button type="submit">Assinar</button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="foot-bottom">
+    <div class="wrap">© 2026 Natural Vibes · Feito à mão, com amor · Todos os direitos reservados</div>
+  </div>
+</footer>
+
+<script>
+/* ═════════════════════════════════════════════════════════════
+   NATURAL VIBES — interações e animações
+   Tudo respeita prefers-reduced-motion.
+═════════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+  document.documentElement.classList.add('js');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Header: sombra ao rolar ─────────────────────────────── */
+  var header = document.getElementById('header');
+  function headerScroll(){ header.classList.toggle('scrolled', window.scrollY > 24); }
+  window.addEventListener('scroll', headerScroll, { passive:true });
+  headerScroll();
+
+  /* ── Menu mobile ─────────────────────────────────────────── */
+  var burger = document.getElementById('burger');
+  var mnav   = document.getElementById('mnav');
+  function setMenu(open){
+    mnav.classList.toggle('open', open);
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  burger.addEventListener('click', function(){ setMenu(!mnav.classList.contains('open')); });
+  mnav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ setMenu(false); });
+  });
+
+  /* ── Animações de entrada (IntersectionObserver) ─────────── */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold:.15, rootMargin:'0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal, .reveal-clip').forEach(function(el){ io.observe(el); });
+
+  /* ── Folhas e pétalas caindo (canvas + rAF) ──────────────── */
+  if (!reduced){
+    var cv = document.getElementById('petals');
+    var ctx = cv.getContext('2d');
+    var W, H;
+    function resizeCanvas(){
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    var COLORS = [
+      'rgba(156,175,136,.55)',  /* sálvia   */
+      'rgba(122,143,107,.45)',  /* musgo    */
+      'rgba(197,184,220,.5)',   /* lavanda  */
+      'rgba(235,201,196,.55)'   /* rosa     */
+    ];
+    function newPetal(anywhere){
+      return {
+        x: Math.random() * W,
+        y: anywhere ? Math.random() * H : -30,
+        s: 5 + Math.random() * 9,            /* tamanho   */
+        vy: .3 + Math.random() * .65,        /* queda     */
+        sw: .4 + Math.random() * .8,         /* balanço   */
+        ph: Math.random() * Math.PI * 2,     /* fase      */
+        r: Math.random() * Math.PI * 2,      /* rotação   */
+        vr: (Math.random() - .5) * .02,
+        c: COLORS[(Math.random() * COLORS.length) | 0]
+      };
+    }
+    var petals = [];
+    var COUNT = W < 700 ? 8 : 14;            /* poucas partículas = leve */
+    for (var i = 0; i < COUNT; i++) petals.push(newPetal(true));
+
+    var t = 0, running = true;
+    function drawPetal(p){
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.r);
+      ctx.fillStyle = p.c;
+      ctx.beginPath();
+      ctx.moveTo(0, -p.s);
+      ctx.quadraticCurveTo(p.s * .85, -p.s * .2, 0, p.s);
+      ctx.quadraticCurveTo(-p.s * .85, -p.s * .2, 0, -p.s);
+      ctx.fill();
+      ctx.restore();
+    }
+    function frame(){
+      if (!running) return;
+      t += .016;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < petals.length; i++){
+        var p = petals[i];
+        p.y += p.vy;
+        p.x += Math.sin(t * p.sw + p.ph) * .4;
+        p.r += p.vr;
+        if (p.y > H + 40) petals[i] = newPetal(false);
+        drawPetal(petals[i]);
+      }
+      requestAnimationFrame(frame);
+    }
+    frame();
+    document.addEventListener('visibilitychange', function(){
+      var was = running;
+      running = !document.hidden;
+      if (running && !was) frame();
+    });
+  }
+
+  /* ── Parallax das decorações vegetais ────────────────────── */
+  if (!reduced){
+    var pls = Array.prototype.slice.call(document.querySelectorAll('.pl'));
+    if (pls.length){
+      var items = [];
+      function measure(){
+        items = pls.map(function(el){
+          el.style.transform = '';
+          var r = el.getBoundingClientRect();
+          return {
+            el: el,
+            speed: parseFloat(el.dataset.speed || '.15'),
+            mid: r.top + window.scrollY + r.height / 2
+          };
+        });
+      }
+      var ticking = false;
+      function applyParallax(){
+        var vc = window.scrollY + window.innerHeight / 2;
+        items.forEach(function(it){
+          var y = (vc - it.mid) * it.speed;
+          it.el.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0)';
+        });
+        ticking = false;
+      }
+      measure(); applyParallax();
+      window.addEventListener('scroll', function(){
+        if (!ticking){ ticking = true; requestAnimationFrame(applyParallax); }
+      }, { passive:true });
+      window.addEventListener('resize', function(){ measure(); applyParallax(); });
+    }
+  }
+
+  /* ── Cursor personalizado (folha) ────────────────────────── */
+  if (!reduced && window.matchMedia('(pointer: fine)').matches){
+    var cur = document.getElementById('cursor');
+    var cx = -100, cy = -100, tx = cx, ty = cy;
+    document.addEventListener('mousemove', function(e){
+      tx = e.clientX + 14; ty = e.clientY + 16;   /* deslocado do ponteiro */
+      cur.classList.add('on');
+    });
+    document.addEventListener('mouseleave', function(){ cur.classList.remove('on'); });
+    document.querySelectorAll('a, button, input').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ cur.classList.add('big'); });
+      el.addEventListener('mouseleave', function(){ cur.classList.remove('big'); });
+    });
+    (function cursorLoop(){
+      cx += (tx - cx) * .16;
+      cy += (ty - cy) * .16;
+      cur.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
+      requestAnimationFrame(cursorLoop);
+    })();
+  }
+
+  /* ── Carrossel de depoimentos ────────────────────────────── */
+  var track = document.getElementById('carTrack');
+  if (track){
+    var slides  = Array.prototype.slice.call(track.children);
+    var dotsBox = document.getElementById('carDots');
+    var box     = document.getElementById('carousel');
+    var idx = 0, timer = null;
+
+    slides.forEach(function(_, k){
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Ir para depoimento ' + (k + 1));
+      b.addEventListener('click', function(){ go(k, true); });
+      dotsBox.appendChild(b);
+    });
+    var dots = Array.prototype.slice.call(dotsBox.children);
+
+    function go(k, byUser){
+      idx = (k + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      dots.forEach(function(d, j){ d.classList.toggle('on', j === idx); });
+      if (byUser) restart();
+    }
+    function restart(){
+      clearInterval(timer);
+      if (!reduced) timer = setInterval(function(){ go(idx + 1); }, 6000);
+    }
+    document.querySelector('.car-prev').addEventListener('click', function(){ go(idx - 1, true); });
+    document.querySelector('.car-next').addEventListener('click', function(){ go(idx + 1, true); });
+    box.addEventListener('mouseenter', function(){ clearInterval(timer); });
+    box.addEventListener('mouseleave', restart);
+
+    /* swipe no touch */
+    var sx = null;
+    box.addEventListener('pointerdown', function(e){ sx = e.clientX; }, { passive:true });
+    box.addEventListener('pointerup', function(e){
+      if (sx === null) return;
+      var dx = e.clientX - sx;
+      if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1), true);
+      sx = null;
+    });
+
+    go(0); restart();
+  }
+
+  /* ── Newsletter (envio simulado) ─────────────────────────── */
+  /* ✏️ SUBSTITUIR: integre aqui com seu serviço de e-mail
+     (Mailchimp, Brevo, RD Station etc.)                        */
+  var form = document.getElementById('newsForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.innerHTML = '<p class="news-ok">🌿 Obrigado! Em breve você receberá nossas novidades.</p>';
+  });
+})();
+</script>
+</body>
+</html>

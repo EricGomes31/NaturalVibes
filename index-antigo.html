@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Natural Vibes — Sabonete de Glicerina Premium</title>
+<meta name="description" content="Natural Vibes — sabonete de glicerina puro, nascido da natureza. Hidratação profunda para pele sensível.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">Natural <em>Vibes</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#how">Como Usar</a></li>
+    <li><a href="#testimonials">Depoimentos</a></li>
+    <li><a href="#about" class="nav-cta">Comprar</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="navMobile" role="dialog" aria-modal="true">
+  <button class="nm-close" onclick="toggleMenu()" aria-label="Fechar">✕</button>
+  <a href="#about" onclick="toggleMenu()">Sobre</a>
+  <a href="#how" onclick="toggleMenu()">Como Usar</a>
+  <a href="#testimonials" onclick="toggleMenu()">Depoimentos</a>
+  <a href="#about" class="btn-gold" onclick="toggleMenu()">Comprar Agora</a>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCROLL STAGE (pinned, ~500vh)
+════════════════════════════════════════ -->
+<div id="stage">
+  <canvas id="pc"></canvas>
+  <div id="glow-core"></div>
+
+  <!-- Phase 1: title + spotlight -->
+  <div id="ph1">
+    <h1>Nascida da<br><em>natureza</em></h1>
+    <p>Cada ingrediente, uma história de cuidado</p>
+    <div id="ing-spotlight">
+      <div id="ing-spot-name"></div>
+      <div id="ing-spot-benefit"></div>
+    </div>
+  </div>
+
+  <!-- 6 Ingredients (i4,i5 hidden on mobile via CSS) -->
+  <div id="ing-layer">
+
+    <!-- i0: Lavanda — top-left -->
+    <div class="ing" id="i0" style="left:8%;top:18%">
+      <div class="ing-inner fA">
+        <svg width="72" height="105" viewBox="0 0 72 105" fill="none">
+          <defs>
+            <linearGradient id="lv1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#c4adf0"/>
+              <stop offset="100%" stop-color="#7a55c4"/>
+            </linearGradient>
+          </defs>
+          <path d="M36 104 C34 82 35 66 36 50" stroke="#5a8040" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M36 84 C28 77 20 73 13 71" stroke="#5a8040" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M36 77 C44 71 52 68 59 67" stroke="#5a8040" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M36 68 C26 62 17 59 11 57" stroke="#5a8040" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M36 62 C46 57 55 55 61 54" stroke="#5a8040" stroke-width="1.4" stroke-linecap="round"/>
+          <ellipse cx="36" cy="28" rx="9.5" ry="25" fill="url(#lv1)" opacity=".92"/>
+          <ellipse cx="12" cy="65" rx="7" ry="17" fill="url(#lv1)" opacity=".8"/>
+          <ellipse cx="60" cy="61" rx="7" ry="17" fill="url(#lv1)" opacity=".8"/>
+          <ellipse cx="10" cy="51" rx="5" ry="12" fill="url(#lv1)" opacity=".65"/>
+          <ellipse cx="62" cy="48" rx="5" ry="12" fill="url(#lv1)" opacity=".65"/>
+          <ellipse cx="31" cy="20" rx="3" ry="9" fill="rgba(255,255,255,.28)"/>
+        </svg>
+      </div>
+      <div class="ing-lbl">Lavanda</div>
+    </div>
+
+    <!-- i1: Camomila — top-right -->
+    <div class="ing" id="i1" style="right:9%;top:13%">
+      <div class="ing-inner fB">
+        <svg width="96" height="96" viewBox="0 0 96 96" fill="none">
+          <defs>
+            <radialGradient id="cm1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fde97a"/>
+              <stop offset="60%" stop-color="#e9bc22"/>
+              <stop offset="100%" stop-color="#d4980e"/>
+            </radialGradient>
+          </defs>
+          <g transform="translate(48,48)">
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(0)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(30)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(60)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(90)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(120)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(150)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(180)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(210)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(240)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(270)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(300)"/>
+            <ellipse cy="-33" rx="6.5" ry="14" fill="white" opacity=".93" transform="rotate(330)"/>
+          </g>
+          <circle cx="48" cy="48" r="20" fill="url(#cm1)"/>
+          <circle cx="44" cy="44" r="2.2" fill="rgba(160,100,0,.25)"/>
+          <circle cx="52" cy="44" r="2.2" fill="rgba(160,100,0,.25)"/>
+          <circle cx="48" cy="52" r="2.2" fill="rgba(160,100,0,.25)"/>
+          <ellipse cx="41" cy="40" rx="6" ry="4" fill="rgba(255,255,255,.22)" transform="rotate(-20,41,40)"/>
+        </svg>
+      </div>
+      <div class="ing-lbl">Camomila</div>
+    </div>
+
+    <!-- i2: Folha — bottom-left -->
+    <div class="ing" id="i2" style="left:18%;bottom:22%">
+      <div class="ing-inner fC">
+        <svg width="86" height="102" viewBox="0 0 86 102" fill="none">
+          <defs>
+            <linearGradient id="lf1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#72c07e"/>
+              <stop offset="50%" stop-color="#4a9456"/>
+              <stop offset="100%" stop-color="#2d6b3a"/>
+            </linearGradient>
+          </defs>
+          <path d="M43 98 C20 78 5 57 10 31 C15 9 36 1 43 4 C50 1 71 9 76 31 C81 57 66 78 43 98Z" fill="url(#lf1)"/>
+          <path d="M43 93 C43 72 43 52 43 7" stroke="rgba(255,255,255,.38)" stroke-width="1.6"/>
+          <path d="M43 66 C30 59 20 56 13 55" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
+          <path d="M43 66 C56 59 66 56 73 55" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
+          <path d="M43 51 C28 44 17 41 11 40" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <path d="M43 51 C58 44 69 41 75 40" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <path d="M43 37 C32 31 23 28 17 27" stroke="rgba(255,255,255,.16)" stroke-width="1"/>
+          <path d="M43 37 C54 31 63 28 69 27" stroke="rgba(255,255,255,.16)" stroke-width="1"/>
+          <path d="M30 18 C28 34 26 52 28 66" stroke="rgba(255,255,255,.18)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="ing-lbl">Aloe Vera</div>
+    </div>
+
+    <!-- i3: Água — bottom-right -->
+    <div class="ing" id="i3" style="right:19%;bottom:28%">
+      <div class="ing-inner fD">
+        <svg width="64" height="86" viewBox="0 0 64 86" fill="none">
+          <defs>
+            <linearGradient id="wt1" x1=".1" y1="0" x2=".4" y2="1">
+              <stop offset="0%" stop-color="rgba(185,228,255,.92)"/>
+              <stop offset="50%" stop-color="rgba(96,182,242,.76)"/>
+              <stop offset="100%" stop-color="rgba(54,138,212,.6)"/>
+            </linearGradient>
+          </defs>
+          <path d="M32 4 C32 4 7 34 7 55 C7 70.5 18.5 81 32 81 C45.5 81 57 70.5 57 55 C57 34 32 4 32 4Z" fill="url(#wt1)"/>
+          <path d="M22 27 C20 38 19 49 21 58" stroke="rgba(255,255,255,.62)" stroke-width="2.8" stroke-linecap="round"/>
+          <ellipse cx="23" cy="23" rx="5" ry="9.5" fill="rgba(255,255,255,.28)" transform="rotate(-18,23,23)"/>
+          <ellipse cx="32" cy="71" rx="10" ry="4" fill="rgba(255,255,255,.14)"/>
+        </svg>
+      </div>
+      <div class="ing-lbl">Água Pura</div>
+    </div>
+
+    <!-- i4: Óleo de coco — left-mid (hidden mobile) -->
+    <div class="ing" id="i4" style="left:4%;bottom:38%">
+      <div class="ing-inner fA">
+        <svg width="62" height="82" viewBox="0 0 62 82" fill="none">
+          <defs>
+            <linearGradient id="ol1" x1=".1" y1="0" x2=".5" y2="1">
+              <stop offset="0%" stop-color="#f5c96e"/>
+              <stop offset="50%" stop-color="#d4942c"/>
+              <stop offset="100%" stop-color="#b8700a"/>
+            </linearGradient>
+          </defs>
+          <path d="M31 3 C31 3 6 28 6 48 C6 64 17.5 76 31 76 C44.5 76 55 64 55 48 C55 28 31 3 31 3Z" fill="url(#ol1)" opacity=".93"/>
+          <ellipse cx="22" cy="34" rx="7" ry="12" fill="rgba(255,224,120,.35)" transform="rotate(-22,22,34)"/>
+          <path d="M19 22 C17 33 17 43 19 53" stroke="rgba(255,255,255,.48)" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="ing-lbl">Óleo de Coco</div>
+    </div>
+
+    <!-- i5: Glicerina — right-bottom (hidden mobile) -->
+    <div class="ing" id="i5" style="right:4%;bottom:18%">
+      <div class="ing-inner fC">
+        <svg width="76" height="82" viewBox="0 0 76 82" fill="none">
+          <defs>
+            <linearGradient id="gl1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="rgba(225,248,255,.96)"/>
+              <stop offset="50%" stop-color="rgba(158,214,242,.72)"/>
+              <stop offset="100%" stop-color="rgba(98,172,222,.52)"/>
+            </linearGradient>
+          </defs>
+          <polygon points="38,3 68,19 68,57 38,73 8,57 8,19" fill="url(#gl1)" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>
+          <polygon points="38,13 58,25 58,51 38,63 18,51 18,25" fill="rgba(255,255,255,.11)" stroke="rgba(255,255,255,.28)" stroke-width="1"/>
+          <polygon points="38,3 58,14 48,3" fill="rgba(255,255,255,.38)"/>
+          <ellipse cx="38" cy="38" rx="12" ry="14" fill="rgba(255,255,255,.14)"/>
+        </svg>
+      </div>
+      <div class="ing-lbl">Glicerina Pura</div>
+    </div>
+
+  </div><!-- /ing-layer -->
+
+  <!-- Mist -->
+  <div id="mist-layer">
+    <div class="mist-e"></div>
+    <div class="mist-e"></div>
+    <div class="mist-e"></div>
+  </div>
+
+  <!-- Soap -->
+  <div id="soap-wrap">
+    <div class="soap-container">
+      <svg class="soap-svg" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg1" x1=".18" y1="0" x2=".82" y2="1">
+            <stop offset="0%" stop-color="#f8eedf"/>
+            <stop offset="30%" stop-color="#eeddca"/>
+            <stop offset="70%" stop-color="#dfcdb2"/>
+            <stop offset="100%" stop-color="#cbb99b"/>
+          </linearGradient>
+          <radialGradient id="sg2" cx="34%" cy="24%" r="54%">
+            <stop offset="0%" stop-color="rgba(255,255,255,.68)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </radialGradient>
+          <radialGradient id="sg3" cx="68%" cy="76%" r="35%">
+            <stop offset="0%" stop-color="rgba(180,140,80,.18)"/>
+            <stop offset="100%" stop-color="rgba(180,140,80,0)"/>
+          </radialGradient>
+        </defs>
+        <!-- body -->
+        <path d="M30 0 L130 0 Q160 0 160 30 L160 190 Q160 220 130 220 L30 220 Q0 220 0 190 L0 30 Q0 0 30 0Z" fill="url(#sg1)"/>
+        <!-- top highlight -->
+        <ellipse cx="64" cy="54" rx="56" ry="36" fill="url(#sg2)"/>
+        <!-- bottom warm shadow -->
+        <ellipse cx="108" cy="178" rx="40" ry="28" fill="url(#sg3)"/>
+        <!-- embossed border -->
+        <path d="M36 8 L124 8 Q152 8 152 36 L152 184 Q152 212 124 212 L36 212 Q8 212 8 184 L8 36 Q8 8 36 8Z" fill="none" stroke="rgba(255,255,255,.32)" stroke-width="1.4"/>
+        <!-- NV monogram -->
+        <text x="80" y="118" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="40" font-weight="300" fill="rgba(154,128,96,.5)" font-style="italic" dominant-baseline="middle">NV</text>
+        <!-- rule -->
+        <line x1="48" y1="133" x2="112" y2="133" stroke="rgba(154,128,96,.28)" stroke-width="1"/>
+        <!-- label -->
+        <text x="80" y="150" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="rgba(154,128,96,.45)" letter-spacing="2.2">GLICERINA NATURAL</text>
+      </svg>
+      <div class="soap-sheen"></div>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  <div id="benefits-panel">
+    <div class="bp-item" id="bp0">
+      <div class="bp-icon">💧</div>
+      <div><div class="bp-title">Hidratação Profunda</div><div class="bp-desc">Glicerina pura retém umidade por até 24h</div></div>
+    </div>
+    <div class="bp-item" id="bp1">
+      <div class="bp-icon">🌿</div>
+      <div><div class="bp-title">100% Natural</div><div class="bp-desc">Ingredientes de origem vegetal certificados</div></div>
+    </div>
+    <div class="bp-item" id="bp2">
+      <div class="bp-icon">✨</div>
+      <div><div class="bp-title">Pele Sensível</div><div class="bp-desc">Hipoalergênico, sem parabenos nem corantes</div></div>
+    </div>
+    <div class="bp-item" id="bp3">
+      <div class="bp-icon">🌱</div>
+      <div><div class="bp-title">Eco-Friendly</div><div class="bp-desc">Embalagem biodegradável, zero desperdício</div></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div id="cta-layer">
+    <h2>Experimente a pureza da <em>natureza</em></h2>
+    <div class="btn-wrap">
+      <a href="#about" class="btn-gold">Comprar Agora</a>
+      <a href="#about" class="btn-outline">Conhecer Mais</a>
+    </div>
+  </div>
+
+  <div id="scroll-hint">Role para baixo</div>
+
+  <!-- PHASE 5 HOOK: roots/vegetation continuation goes here -->
+</div><!-- /stage -->
+
+<!-- ═══════════════════════════════════════
+     BELOW FOLD
+════════════════════════════════════════ -->
+
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-tag fu">Nossa História</div>
+      <h2 class="section-title fu">Cada sabonete, uma <em>obra da natureza</em></h2>
+      <p class="fu">A Natural Vibes nasceu da crença de que a pele merece apenas o que a natureza tem de melhor. Sem químicos agressivos — apenas ingredientes puros, cuidadosamente selecionados.</p>
+      <p class="fu">Nossa glicerina é extraída de fontes vegetais certificadas, combinada com óleos essenciais e extratos botânicos que trabalham em sinergia para nutrir e proteger sua pele.</p>
+      <a href="#" class="btn-gold fu" style="margin-top:.8rem;display:inline-block">Ver Todos os Produtos</a>
+    </div>
+    <div class="about-visual fu">
+      <svg width="170" height="240" viewBox="0 0 160 220" style="filter:drop-shadow(0 18px 36px rgba(47,74,60,.22))">
+        <defs>
+          <linearGradient id="asg1" x1=".2" y1="0" x2=".8" y2="1">
+            <stop offset="0%" stop-color="#f8eedf"/>
+            <stop offset="100%" stop-color="#cbb99b"/>
+          </linearGradient>
+          <radialGradient id="asg2" cx="34%" cy="24%" r="54%">
+            <stop offset="0%" stop-color="rgba(255,255,255,.6)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </radialGradient>
+        </defs>
+        <path d="M30 0 L130 0 Q160 0 160 30 L160 190 Q160 220 130 220 L30 220 Q0 220 0 190 L0 30 Q0 0 30 0Z" fill="url(#asg1)"/>
+        <ellipse cx="64" cy="54" rx="56" ry="36" fill="url(#asg2)"/>
+        <text x="80" y="118" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="42" font-weight="300" fill="rgba(154,128,96,.42)" font-style="italic" dominant-baseline="middle">NV</text>
+        <line x1="48" y1="133" x2="112" y2="133" stroke="rgba(154,128,96,.25)" stroke-width="1"/>
+        <text x="80" y="150" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="rgba(154,128,96,.38)" letter-spacing="2.2">GLICERINA NATURAL</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="how-inner">
+    <div class="section-tag fu">Como Usar</div>
+    <h2 class="section-title fu">O ritual de <em>cuidado perfeito</em></h2>
+    <div class="how-steps">
+      <div class="how-step fu">
+        <div class="how-num">01</div>
+        <h3>Umedeça a pele</h3>
+        <p>Aplique água morna no rosto ou corpo para preparar a pele para receber os nutrientes</p>
+      </div>
+      <div class="how-step fu">
+        <div class="how-num">02</div>
+        <h3>Crie espuma suave</h3>
+        <p>Faça movimentos circulares com o sabonete, criando uma rica espuma cremosa e hidratante</p>
+      </div>
+      <div class="how-step fu">
+        <div class="how-num">03</div>
+        <h3>Enxágue e sinta</h3>
+        <p>Lave com água fria para fechar os poros e sinta a pele nutrida, macia e radiante</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="testi-inner">
+    <div class="section-tag fu" style="text-align:center">Depoimentos</div>
+    <h2 class="section-title fu" style="text-align:center">O que nossos clientes <em>dizem</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card fu">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Minha pele sensível nunca ficou tão hidratada. Finalmente um sabonete que não resseca!"</div>
+        <div class="testi-author">Ana Carolina S.</div>
+        <div class="testi-role">Mãe de família · São Paulo</div>
+      </div>
+      <div class="testi-card fu">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Uso no meu bebê de 3 meses e é perfeito. O médico aprovou e a mamãe adorou!"</div>
+        <div class="testi-author">Mariana T.</div>
+        <div class="testi-role">Mãe de primeira viagem · RJ</div>
+      </div>
+      <div class="testi-card fu">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"O aroma de lavanda é incrível e a pele fica sedosa o dia todo. Não troco por nada!"</div>
+        <div class="testi-author">Roberto M.</div>
+        <div class="testi-role">Gerente · Belo Horizonte</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Natural Vibes</div>
+      <div class="footer-brand-desc">Cuidado natural para sua pele, criado com amor e ingredientes puros da natureza.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul>
+        <li><a href="#about">Sobre nós</a></li>
+        <li><a href="#how">Como usar</a></li>
+        <li><a href="#testimonials">Depoimentos</a></li>
+        <li><a href="#">Loja</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="mailto:contato@naturalvibes.com.br">contato@naturalvibes.com.br</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Natural Vibes. Todos os direitos reservados.</span>
+    <span>Feito com amor pela natureza</span>
+  </div>
+</footer>
+
+<!-- GSAP (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- App logic -->
+<script src="script.js"></script>
+</body>
+</html>
